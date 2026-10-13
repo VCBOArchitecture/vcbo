@@ -93,10 +93,17 @@ export default function Project(props) {
     speed: 1700,
     slidesToShow: 1,
     slidesToScroll: 1,
-    afterChange: (newIndex, slider) => {
+  }
+
+  // Only the image carousel drives the counter, not the hero carousel
+  const imageCarouselSettings = {
+    ...settings,
+    afterChange: (newIndex) => {
       setSliderIndex(newIndex + 1)
     },
   }
+
+  const hasImageCarousel = pageData?.image_carousel?.length > 0
 
   return (
     <>
@@ -228,26 +235,36 @@ export default function Project(props) {
                   />
                 </ScrollAnimate>
               </div>
-              <p className="hidden md:flex carousel-count small-subhead col-start-2 col-span-1 items-end justify-items-end">
-                <div className="w-full text-right mr-5">
-                  <span>{`${sliderIndex}`}&nbsp;</span> /{" "}
-                  {`${pageData?.image_carousel?.length}`}
-                </div>
-              </p>
-              <div className="md:col-start-3 col-span-4 md:col-span-2 mt-4">
-                <ScrollAnimate>
-                  <Slider {...settings}>
-                    {pageData?.image_carousel?.map((item) => {
-                      return <img className="w-full" src={item.image.url} />
-                    })}
-                  </Slider>
-                </ScrollAnimate>
-                <p className="carousel-count small-subhead col-start-2 col-span-1 items-end flex md:hidden justify-items-end">
-                  <div className="w-full text-right mr-5 mt-2">
+              {hasImageCarousel ? (
+                <p className="hidden md:flex carousel-count small-subhead col-start-2 col-span-1 items-end justify-items-end">
+                  <div className="w-full text-right mr-5">
                     <span>{`${sliderIndex}`}&nbsp;</span> /{" "}
                     {`${pageData?.image_carousel?.length}`}
                   </div>
                 </p>
+              ) : (
+                ""
+              )}
+              <div className="md:col-start-3 col-span-4 md:col-span-2 mt-4">
+                {hasImageCarousel ? (
+                  <>
+                    <ScrollAnimate>
+                      <Slider {...imageCarouselSettings}>
+                        {pageData?.image_carousel?.map((item) => {
+                          return <img className="w-full" src={item.image.url} />
+                        })}
+                      </Slider>
+                    </ScrollAnimate>
+                    <p className="carousel-count small-subhead col-start-2 col-span-1 items-end flex md:hidden justify-items-end">
+                      <div className="w-full text-right mr-5 mt-2">
+                        <span>{`${sliderIndex}`}&nbsp;</span> /{" "}
+                        {`${pageData?.image_carousel?.length}`}
+                      </div>
+                    </p>
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="col-start-1 col-span-4 mt-40">
                 <ScrollAnimate>
