@@ -76,8 +76,6 @@ export default function Project(props) {
     setNextProject(filteredProjects[projectIndex + 1])
 
     setLoaded(true)
-
-    console.log("page data ", pageData?.display_bottom_content)
   }, [projectIndex, nextProject, previousProject])
 
   const settings = {
