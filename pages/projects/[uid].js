@@ -18,7 +18,7 @@ export async function getStaticProps({ params, previewData }) {
   const client = createClient({ previewData })
 
   const page = await client.getByUID("project", params.uid, {
-    fetchLinks: ["sector.name"],
+    fetchLinks: ["sector.name", "specialty.name"],
   })
   const projects = await client.getAllByType("project", {
     fetchLinks: ["sector.name"],
@@ -63,8 +63,13 @@ export default function Project(props) {
     }
 
     const currentSector = pageData?.sector?.data?.name[0]?.text
+    const currentSpecialty = pageData?.specialty?.uid
+    // Prev/next stays within the project's specialty (e.g. Mountain Resorts)
+    // rather than walking the whole sector
     const filteredProjects = projects.filter(
-      (project) => project?.data?.sector?.data?.name[0]?.text === currentSector,
+      (project) =>
+        project?.data?.sector?.data?.name[0]?.text === currentSector &&
+        project?.data?.specialty?.uid === currentSpecialty,
     )
 
     setFilteredProjects(filteredProjects)
@@ -351,7 +356,8 @@ export default function Project(props) {
               <>
                 <p className="col-span-2">Projects:</p>
                 <p className="col-span-2 large mb-5">
-                  {pageData?.sector?.data?.name[0]?.text}
+                  {pageData?.specialty?.data?.name?.[0]?.text ||
+                    pageData?.sector?.data?.name[0]?.text}
                 </p>
               </>
             )}
