@@ -138,7 +138,6 @@ export default function Projects(props) {
                     }
                     sector={sectorInfo?.data?.name[0]?.text}
                     blurb={sectorInfo?.data?.description[0]?.text}
-                    sectorLink={project?.project?.data?.sector?.url}
                     projectLink={project?.project?.data?.sector?.url}
                   />
                 </ScrollAnimate>
