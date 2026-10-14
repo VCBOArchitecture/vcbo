@@ -72,8 +72,6 @@ export const Header = (props) => {
   const handleMobileLinkClick = (e, dropdownItems, index, link) => {
     e.preventDefault()
 
-    console.log("test")
-
     if (dropdownItems.length > 0) {
       setActiveMobileMenu(index)
     } else {

@@ -35,8 +35,6 @@ export default function Services(props) {
     }
 
     setLoaded(true)
-
-    console.log("unlisted page ", unlistedPage)
   }, [])
 
   const showColumn = (name) => {

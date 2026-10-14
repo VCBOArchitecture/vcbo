@@ -13,10 +13,7 @@ export default function TeamDropdown(props) {
     const allSegments = document.querySelectorAll(".team-segment")
     const activeSegment = document.querySelector(`.${formattedTitle}`)
 
-    console.log("thing", formattedTitle)
-
     if (formattedTitle === "all-team") {
-      console.log("yes")
       allSegments.forEach((item) => item.classList.remove("hide-segment"))
       allSegments.forEach((item) => item.classList.add("show-segment"))
     } else {

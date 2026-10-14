@@ -92,15 +92,12 @@ export default function Sectors(props) {
     }
 
     const placeholderSectorsArray = []
-    console.log({ pageData })
 
     if (pageData?.slices?.[0]?.items) {
       pageData.slices[0].items.map((item) => {
         placeholderSectorsArray.push(item.specialty.slug)
       })
     }
-
-    console.log({ placeholderSectorsArray })
 
     const sectorTitles = placeholderSectorsArray
 
@@ -117,8 +114,6 @@ export default function Sectors(props) {
         return acc
       }, {})
     )
-
-    console.log("About to set reducedProjects:", reducedProjects)
 
     if (reducedProjects.length > 1) {
       // Ordering the projects in order that is set by the CMS (hacky but works)
@@ -141,7 +136,6 @@ export default function Sectors(props) {
         (item) => item !== undefined
       )
 
-      console.log("Setting rearranged projects:", rearrangedProjects)
       setReducedProjects(rearrangedProjects)
     } else {
       setReducedProjects(reducedProjects)
