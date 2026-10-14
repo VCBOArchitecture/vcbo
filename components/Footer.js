@@ -30,14 +30,14 @@ export const Footer = (props) => {
               <div className="md:ml-4 col-span-2">
                 <p className="small-subhead mb-4">Careers</p>
                 <p>{data?.careers[0]?.text[0]?.text}</p>
-                <p>
+                <div>
                   <a
                     href={data?.careers[0]?.link[0].spans[0]?.data?.url}
                     className="underline"
                   >
                     <p>{data?.careers[0]?.link[0]?.text}</p>
                   </a>
-                </p>
+                </div>
               </div>
               <div className="col-start-3 col-span-2 ml-4">
                 <p className="small-subhead mb-4">STG</p>

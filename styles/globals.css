@@ -16,6 +16,9 @@
 
 .carousel-count {
   color: var(--mediumGrey) !important;
+  /* The counter is a div, so it needs the font that p and a get globally */
+  font-family: "founders";
+  -webkit-font-smoothing: antialiased;
 }
 
 .carousel-count span {

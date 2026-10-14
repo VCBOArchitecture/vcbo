@@ -236,12 +236,12 @@ export default function Project(props) {
                 </ScrollAnimate>
               </div>
               {hasImageCarousel ? (
-                <p className="hidden md:flex carousel-count small-subhead col-start-2 col-span-1 items-end justify-items-end">
+                <div className="hidden md:flex carousel-count small-subhead col-start-2 col-span-1 items-end justify-items-end">
                   <div className="w-full text-right mr-5">
                     <span>{`${sliderIndex}`}&nbsp;</span> /{" "}
                     {`${pageData?.image_carousel?.length}`}
                   </div>
-                </p>
+                </div>
               ) : (
                 ""
               )}
@@ -255,12 +255,12 @@ export default function Project(props) {
                         })}
                       </Slider>
                     </ScrollAnimate>
-                    <p className="carousel-count small-subhead col-start-2 col-span-1 items-end flex md:hidden justify-items-end">
+                    <div className="carousel-count small-subhead col-start-2 col-span-1 items-end flex md:hidden justify-items-end">
                       <div className="w-full text-right mr-5 mt-2">
                         <span>{`${sliderIndex}`}&nbsp;</span> /{" "}
                         {`${pageData?.image_carousel?.length}`}
                       </div>
-                    </p>
+                    </div>
                   </>
                 ) : (
                   ""
