@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import ScrollAnimate from "../../components/ScrollAnimate"
 import { Button } from "../../components/Button"
 import * as prismicH from "@prismicio/helpers"
@@ -155,8 +155,14 @@ export default function Project(props) {
             ) : (
               <ScrollAnimate className="mt-10 md:mt-24 project-full-image">
                 <Slider {...settings}>
-                  {pageData?.hero_carousel?.map((item) => {
-                    return <img className="w-full" src={item.image.url} />
+                  {pageData?.hero_carousel?.map((item, index) => {
+                    return (
+                      <img
+                        className="w-full"
+                        src={item.image.url}
+                        key={index}
+                      />
+                    )
                   })}
                 </Slider>
               </ScrollAnimate>
@@ -193,11 +199,11 @@ export default function Project(props) {
                 {page?.tags?.map((tag, index, arr) => {
                   const returnComma = arr.length - 1 === index ? "" : ","
                   return (
-                    <>
+                    <Fragment key={tag}>
                       {tag}
                       {returnComma}
                       <br />
-                    </>
+                    </Fragment>
                   )
                 })}
               </p>
@@ -250,8 +256,14 @@ export default function Project(props) {
                   <>
                     <ScrollAnimate>
                       <Slider {...imageCarouselSettings}>
-                        {pageData?.image_carousel?.map((item) => {
-                          return <img className="w-full" src={item.image.url} />
+                        {pageData?.image_carousel?.map((item, index) => {
+                          return (
+                            <img
+                              className="w-full"
+                              src={item.image.url}
+                              key={index}
+                            />
+                          )
                         })}
                       </Slider>
                     </ScrollAnimate>
@@ -295,9 +307,9 @@ export default function Project(props) {
                   <ScrollAnimate>
                     <h4 className="underline">Awards</h4>
                     <ul>
-                      {pageData?.awards.map((award) => {
+                      {pageData?.awards.map((award, index) => {
                         return (
-                          <li class="mb-1">
+                          <li className="mb-1" key={index}>
                             <a
                               className="body-large"
                               href={award?.link?.url}
@@ -319,9 +331,9 @@ export default function Project(props) {
                   <ScrollAnimate>
                     <h4 className="underline">Publications</h4>
                     <ul>
-                      {pageData?.publications.map((publication) => {
+                      {pageData?.publications.map((publication, index) => {
                         return (
-                          <li class="mb-1">
+                          <li className="mb-1" key={index}>
                             <a
                               className="body-large"
                               href={publication?.link?.url}
