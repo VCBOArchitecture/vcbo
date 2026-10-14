@@ -285,9 +285,10 @@ export default function Sectors(props) {
                 <p>Project Size</p>
                 <p>Client</p>
               </div>
-              {additionalProjects?.map((item) => {
+              {additionalProjects?.map((item, index) => {
                 return (
                   <AdditionalProject
+                    key={index}
                     name={item?.data?.name[0]?.text}
                     location={item?.data?.location[0]?.text}
                     size={`${item?.data?.sq_ft[0]?.text} sq ft`}

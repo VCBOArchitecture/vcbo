@@ -27,9 +27,9 @@ export default function SelectDropdown(props) {
               All Projects
             </Link>
           </li>
-          {items?.map((item) => {
+          {items?.map((item, index) => {
             return (
-              <li>
+              <li key={index}>
                 <Link
                   className="sector"
                   href={item?.url}
@@ -39,8 +39,8 @@ export default function SelectDropdown(props) {
                 </Link>
                 {item?.data?.slices[0]?.items?.length > 0 ? (
                   <ul className="specialties">
-                    {item?.data?.slices[0].items.map((item) => (
-                      <li>
+                    {item?.data?.slices[0].items.map((item, subIndex) => (
+                      <li key={subIndex}>
                         <Link
                           href={item?.specialty?.url}
                           onClick={() => setShowDropdown(false)}

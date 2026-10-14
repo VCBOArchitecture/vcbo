@@ -159,8 +159,9 @@ export default function Articles(props) {
             ></input>
           </ScrollAnimate>
           <ScrollAnimate className="col-start-4 xl:col-start-2 col-span-2 xl:col-span-3 flex flex-wrap justify-around tags mt-0">
-            {tags?.map((item) => (
+            {tags?.map((item, index) => (
               <h4
+                key={index}
                 className={`tagname relative ${
                   item === undefined ? "hidden" : ""
                 }`}
@@ -178,8 +179,9 @@ export default function Articles(props) {
             data={sortedArticles}
             renderResults={(results) => (
               <>
-                {results.map((el) => (
+                {results.map((el, index) => (
                   <ScrollAnimate
+                    key={index}
                     className={`col-span-6 sm:col-span-3 break-inside mb-16 mr-4 article-preview-outer ${el.tags.map(
                       (item) => ` ${item} `
                     )}`}

@@ -146,9 +146,9 @@ export default function Sectors(props) {
           </h3>
         </ScrollAnimate>
         <div className="grid grid-cols-2">
-          {projectResults?.map((project) => {
+          {projectResults?.map((project, index) => {
             return (
-              <ScrollAnimate className="mr-4">
+              <ScrollAnimate key={index} className="mr-4">
                 <FilteredProject
                   title={project?.data?.name[0]?.text}
                   specialty={project?.data?.specialty?.data?.name[0]?.text}
@@ -171,9 +171,10 @@ export default function Sectors(props) {
             onExit={() => addDarkMode()}
           >
             <div className="additional-project-container">
-              {additionalProjects?.map((item) => {
+              {additionalProjects?.map((item, index) => {
                 return (
                   <AdditionalProject
+                    key={index}
                     name={item?.data?.name[0]?.text}
                     location={item?.data?.location[0]?.text}
                     size={`${item?.data?.sq_ft[0]?.text} sq ft`}

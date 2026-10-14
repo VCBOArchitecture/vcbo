@@ -9,7 +9,7 @@ export const HeadshotWrapperSegment = (props) => {
     <div className="grid grid-cols-4 md:grid-cols-8 col-span-8">
       {headshots.map((item, index) => {
         return (
-          <ScrollAnimate>
+          <ScrollAnimate key={index}>
             <Headshot
               image={item?.headshot?.url}
               name={item?.name[0]?.text}

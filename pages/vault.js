@@ -109,6 +109,7 @@ export default function Services(props) {
           {unlistedPage?.data?.files.map((item, index) => {
             return (
               <FilteredProject
+                key={index}
                 className="md:col-span-1 mb-5 mr-4"
                 title={item?.title[0]?.text}
                 specialty={item?.sub_heading[0]?.text}

@@ -63,9 +63,9 @@ export default function TeamDropdown(props) {
               Principals
             </Link>
           </li>
-          {items?.map((item) => {
+          {items?.map((item, index) => {
             return (
-              <li>
+              <li key={index}>
                 <Link
                   href="#"
                   className="sector"

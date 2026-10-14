@@ -128,7 +128,7 @@ export default function Projects(props) {
 
             if (project?.project?.data !== undefined) {
               return (
-                <ScrollAnimate className="mr-4">
+                <ScrollAnimate key={index} className="mr-4">
                   <Project
                     theme={theme}
                     image={
