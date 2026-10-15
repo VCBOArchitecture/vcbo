@@ -23,11 +23,18 @@ export async function getStaticProps({ params, previewData }) {
   const projects = await client.getAllByType("project", {
     fetchLinks: ["sector.name"],
   })
+  // Subsection order set on the sector in Prismic, which the sector page uses
+  const sector = page.data.sector?.uid
+    ? await client.getByUID("sector", page.data.sector.uid).catch(() => null)
+    : null
+  const specialtyOrder = (sector?.data?.slices?.[0]?.items ?? [])
+    .map((item) => item?.specialty?.uid)
+    .filter(Boolean)
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
 
   return {
-    props: { page, projects, footer, navigation },
+    props: { page, projects, specialtyOrder, footer, navigation },
   }
 }
 
@@ -44,7 +51,7 @@ export async function getStaticPaths() {
 }
 
 export default function Project(props) {
-  const { page, projects } = props
+  const { page, projects, specialtyOrder } = props
   const [filteredProjects, setFilteredProjects] = useState()
   const [projectIndex, setProjectIndex] = useState()
   const [previousProject, setPreviousProject] = useState()
@@ -63,8 +70,22 @@ export default function Project(props) {
     }
 
     const currentSector = pageData?.sector?.data?.name[0]?.text
-    const filteredProjects = projects.filter(
+    const sectorProjects = projects.filter(
       (project) => project?.data?.sector?.data?.name[0]?.text === currentSector,
+    )
+    // Walk the sector one subsection at a time, in the sector page's order:
+    // subsections as ordered on the sector in Prismic, then any it doesn't list
+    const subsections = [
+      ...new Set(
+        sectorProjects.map((project) => project?.data?.specialty?.uid),
+      ),
+    ]
+    const rank = (specialty) =>
+      specialtyOrder.includes(specialty)
+        ? specialtyOrder.indexOf(specialty)
+        : specialtyOrder.length + subsections.indexOf(specialty)
+    const filteredProjects = [...sectorProjects].sort(
+      (a, b) => rank(a?.data?.specialty?.uid) - rank(b?.data?.specialty?.uid),
     )
 
     setFilteredProjects(filteredProjects)
@@ -72,8 +93,17 @@ export default function Project(props) {
     setProjectIndex(
       filteredProjects?.findIndex((project) => project.uid === page?.uid),
     )
-    setPreviousProject(filteredProjects[projectIndex - 1])
-    setNextProject(filteredProjects[projectIndex + 1])
+    // Cycle: Next on the last project wraps to the first, Prev to the last
+    const count = filteredProjects.length
+    const canCycle = projectIndex >= 0 && count > 1
+    setPreviousProject(
+      canCycle
+        ? filteredProjects[(projectIndex - 1 + count) % count]
+        : undefined,
+    )
+    setNextProject(
+      canCycle ? filteredProjects[(projectIndex + 1) % count] : undefined,
+    )
 
     setLoaded(true)
   }, [projectIndex, nextProject, previousProject])
