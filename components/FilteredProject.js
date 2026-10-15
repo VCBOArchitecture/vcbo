@@ -6,7 +6,7 @@ export const FilteredProject = (props) => {
   return (
     <div className={`filtered-project project-col col-span-2 ${className}`}>
       <Link href={url} className="project-wrapper" target={target}>
-        <img className="w-full" mb-4 src={image} />
+        <img className="w-full" src={image} />
         <div className="flex justify-between my-5 ml-4">
           <div>
             <p className="mb-2 md:mb-0 project-name">{title}</p>

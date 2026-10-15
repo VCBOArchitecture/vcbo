@@ -26,7 +26,7 @@ export const HeadshotWrapper = (props) => {
     >
       {headshots.map((item, index) => {
         return (
-          <ScrollAnimate>
+          <ScrollAnimate key={index}>
             <Headshot
               image={item?.headshot?.url}
               name={item?.name[0]?.text}

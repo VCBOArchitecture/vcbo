@@ -66,7 +66,10 @@ export default function About(props) {
             .toLowerCase()
 
           return (
-            <ScrollAnimate className={`mb-20 team-segment ${formattedTitle}`}>
+            <ScrollAnimate
+              key={index}
+              className={`mb-20 team-segment ${formattedTitle}`}
+            >
               <h3 className="mb-5 md:mb-8 pl-3">
                 {item?.primary?.team_segment[0]?.text}
               </h3>

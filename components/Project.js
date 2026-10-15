@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 export const Project = (props) => {
-  const { theme, image, sector, blurb, sectorLink, projectLink } = props
+  const { theme, image, sector, blurb, projectLink } = props
   return (
     <div className="project-col col-span-2 md:col-span-1">
       <Link
@@ -38,12 +38,13 @@ export const Project = (props) => {
             >
               {blurb}
             </p>
+            {/* The whole card is already a link, so this can't be another <a> */}
             <Button
+              as="span"
               className={`${
                 theme === "grid" ? "mt-10" : "md:col-span-1  md:ml-4"
               }`}
               theme="dark"
-              link={sectorLink}
               text={`All ${sector} Projects`}
             />
           </div>

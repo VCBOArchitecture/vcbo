@@ -37,7 +37,6 @@ export default function Article(props) {
   const date = new Date(article?.first_publication_date)
   const [loaded, setLoaded] = useState(false)
   useEffect(() => {
-    console.log(article)
     if (process.browser) {
       document.body.classList.remove("homepage")
       document.body.classList.remove("dark-mode")

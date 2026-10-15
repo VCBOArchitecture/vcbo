@@ -72,8 +72,6 @@ export const Header = (props) => {
   const handleMobileLinkClick = (e, dropdownItems, index, link) => {
     e.preventDefault()
 
-    console.log("test")
-
     if (dropdownItems.length > 0) {
       setActiveMobileMenu(index)
     } else {
@@ -179,9 +177,9 @@ export const Header = (props) => {
                 <span>{data?.nav_1_label}</span>
               </Link>
               <ul className="nav-dropdown dropdown absolute w-full">
-                {data?.nav_1_dropdown.map((item) => {
+                {data?.nav_1_dropdown.map((item, index) => {
                   return (
-                    <li>
+                    <li key={index}>
                       <Link
                         className="text-[19px] leading-[19px] font-normal"
                         href={item?.link?.url ? item?.link?.url : "#"}
@@ -203,9 +201,9 @@ export const Header = (props) => {
                 <span>{data?.nav_2_label}</span>
               </Link>
               <ul className="nav-dropdown dropdown absolute w-full">
-                {data?.nav_2_dropdown.map((item) => {
+                {data?.nav_2_dropdown.map((item, index) => {
                   return (
-                    <li>
+                    <li key={index}>
                       <Link
                         className="text-[19px] leading-[19px] font-normal"
                         href={item?.link?.url ? item?.link?.url : "#"}
@@ -227,9 +225,9 @@ export const Header = (props) => {
                 <span>{data?.nav_3_label}</span>
               </Link>
               <ul className="nav-dropdown dropdown absolute w-full">
-                {data?.nav_3_dropdown.map((item) => {
+                {data?.nav_3_dropdown.map((item, index) => {
                   return (
-                    <li>
+                    <li key={index}>
                       <Link
                         className="text-[19px] leading-[19px] font-normal"
                         href={item?.link?.url ? item?.link?.url : "#"}
@@ -252,9 +250,9 @@ export const Header = (props) => {
                 <span>{data?.nav_4_label}</span>
               </Link>
               <ul className="nav-dropdown dropdown absolute w-full">
-                {data?.nav_4_dropdown.map((item) => {
+                {data?.nav_4_dropdown.map((item, index) => {
                   return (
-                    <li>
+                    <li key={index}>
                       <Link
                         className="text-[19px] leading-[19px] font-normal"
                         href={item?.link?.url ? item?.link?.url : "#"}
@@ -340,9 +338,9 @@ export const Header = (props) => {
                       activeMobileMenu === 0 ? "active" : ""
                     } mobile-dropdown w-full`}
                   >
-                    {data?.nav_1_dropdown.map((item) => {
+                    {data?.nav_1_dropdown.map((item, index) => {
                       return (
-                        <li>
+                        <li key={index}>
                           <Link
                             className="text-[12px] font-normal"
                             href="#"
@@ -377,9 +375,9 @@ export const Header = (props) => {
                       activeMobileMenu === 1 ? "active" : ""
                     } mobile-dropdown w-full`}
                   >
-                    {data?.nav_2_dropdown.map((item) => {
+                    {data?.nav_2_dropdown.map((item, index) => {
                       return (
-                        <li>
+                        <li key={index}>
                           <Link
                             className="text-[12px] font-normal"
                             href="#"
@@ -414,9 +412,9 @@ export const Header = (props) => {
                       activeMobileMenu === 2 ? "active" : ""
                     } mobile-dropdown w-full`}
                   >
-                    {data?.nav_3_dropdown.map((item) => {
+                    {data?.nav_3_dropdown.map((item, index) => {
                       return (
-                        <li>
+                        <li key={index}>
                           <Link
                             className="text-[12px] font-normal"
                             href="#"
@@ -451,9 +449,9 @@ export const Header = (props) => {
                       activeMobileMenu === 3 ? "active" : ""
                     } mobile-dropdown w-full`}
                   >
-                    {data?.nav_4_dropdown.map((item) => {
+                    {data?.nav_4_dropdown.map((item, index) => {
                       return (
-                        <li>
+                        <li key={index}>
                           <Link
                             className="text-[12px] font-normal"
                             href="#"

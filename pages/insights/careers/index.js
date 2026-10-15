@@ -77,15 +77,15 @@ export default function Careers(props) {
           </ScrollAnimate>
           <ScrollAnimate className="col-span-2 md:col-span-1">
             <p className="small-subhead">POSITION</p>
-            {careers?.data?.architectural_team?.map((item) => (
-              <p className="mt-6">
+            {careers?.data?.architectural_team?.map((item, index) => (
+              <p key={index} className="mt-6">
                 <a href={item?.link?.url} target={item?.link?.target}>
                   {item?.position[0]?.text}
                 </a>
               </p>
             ))}
-            {careers?.data?.interior_design_team?.map((item) => (
-              <p className="mt-6">
+            {careers?.data?.interior_design_team?.map((item, index) => (
+              <p key={index} className="mt-6">
                 <a href={item?.link?.url} target={item?.link?.target}>
                   {item?.position[0]?.text}
                 </a>
@@ -94,11 +94,11 @@ export default function Careers(props) {
           </ScrollAnimate>
           <ScrollAnimate className="col-span-1">
             <p className="small-subhead">LOCATION</p>
-            {careers?.data?.architectural_team?.map((item) => (
-              <p className="mt-6">{item?.location[0]?.text}</p>
+            {careers?.data?.architectural_team?.map((item, index) => (
+              <p key={index} className="mt-6">{item?.location[0]?.text}</p>
             ))}
-            {careers?.data?.interior_design_team?.map((item) => (
-              <p className="mt-6">{item?.location[0]?.text}</p>
+            {careers?.data?.interior_design_team?.map((item, index) => (
+              <p key={index} className="mt-6">{item?.location[0]?.text}</p>
             ))}
           </ScrollAnimate>
         </div>

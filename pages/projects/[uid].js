@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import ScrollAnimate from "../../components/ScrollAnimate"
 import { Button } from "../../components/Button"
 import * as prismicH from "@prismicio/helpers"
@@ -76,8 +76,6 @@ export default function Project(props) {
     setNextProject(filteredProjects[projectIndex + 1])
 
     setLoaded(true)
-
-    console.log("page data ", pageData?.display_bottom_content)
   }, [projectIndex, nextProject, previousProject])
 
   const settings = {
@@ -93,10 +91,17 @@ export default function Project(props) {
     speed: 1700,
     slidesToShow: 1,
     slidesToScroll: 1,
-    afterChange: (newIndex, slider) => {
+  }
+
+  // Only the image carousel drives the counter, not the hero carousel
+  const imageCarouselSettings = {
+    ...settings,
+    afterChange: (newIndex) => {
       setSliderIndex(newIndex + 1)
     },
   }
+
+  const hasImageCarousel = pageData?.image_carousel?.length > 0
 
   return (
     <>
@@ -148,8 +153,14 @@ export default function Project(props) {
             ) : (
               <ScrollAnimate className="mt-10 md:mt-24 project-full-image">
                 <Slider {...settings}>
-                  {pageData?.hero_carousel?.map((item) => {
-                    return <img className="w-full" src={item.image.url} />
+                  {pageData?.hero_carousel?.map((item, index) => {
+                    return (
+                      <img
+                        className="w-full"
+                        src={item.image.url}
+                        key={index}
+                      />
+                    )
                   })}
                 </Slider>
               </ScrollAnimate>
@@ -186,11 +197,11 @@ export default function Project(props) {
                 {page?.tags?.map((tag, index, arr) => {
                   const returnComma = arr.length - 1 === index ? "" : ","
                   return (
-                    <>
+                    <Fragment key={tag}>
                       {tag}
                       {returnComma}
                       <br />
-                    </>
+                    </Fragment>
                   )
                 })}
               </p>
@@ -228,26 +239,42 @@ export default function Project(props) {
                   />
                 </ScrollAnimate>
               </div>
-              <p className="hidden md:flex carousel-count small-subhead col-start-2 col-span-1 items-end justify-items-end">
-                <div className="w-full text-right mr-5">
-                  <span>{`${sliderIndex}`}&nbsp;</span> /{" "}
-                  {`${pageData?.image_carousel?.length}`}
-                </div>
-              </p>
-              <div className="md:col-start-3 col-span-4 md:col-span-2 mt-4">
-                <ScrollAnimate>
-                  <Slider {...settings}>
-                    {pageData?.image_carousel?.map((item) => {
-                      return <img className="w-full" src={item.image.url} />
-                    })}
-                  </Slider>
-                </ScrollAnimate>
-                <p className="carousel-count small-subhead col-start-2 col-span-1 items-end flex md:hidden justify-items-end">
-                  <div className="w-full text-right mr-5 mt-2">
+              {hasImageCarousel ? (
+                <div className="hidden md:flex carousel-count small-subhead col-start-2 col-span-1 items-end justify-items-end">
+                  <div className="w-full text-right mr-5">
                     <span>{`${sliderIndex}`}&nbsp;</span> /{" "}
                     {`${pageData?.image_carousel?.length}`}
                   </div>
-                </p>
+                </div>
+              ) : (
+                ""
+              )}
+              <div className="md:col-start-3 col-span-4 md:col-span-2 mt-4">
+                {hasImageCarousel ? (
+                  <>
+                    <ScrollAnimate>
+                      <Slider {...imageCarouselSettings}>
+                        {pageData?.image_carousel?.map((item, index) => {
+                          return (
+                            <img
+                              className="w-full"
+                              src={item.image.url}
+                              key={index}
+                            />
+                          )
+                        })}
+                      </Slider>
+                    </ScrollAnimate>
+                    <div className="carousel-count small-subhead col-start-2 col-span-1 items-end flex md:hidden justify-items-end">
+                      <div className="w-full text-right mr-5 mt-2">
+                        <span>{`${sliderIndex}`}&nbsp;</span> /{" "}
+                        {`${pageData?.image_carousel?.length}`}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="col-start-1 col-span-4 mt-40">
                 <ScrollAnimate>
@@ -278,9 +305,9 @@ export default function Project(props) {
                   <ScrollAnimate>
                     <h4 className="underline">Awards</h4>
                     <ul>
-                      {pageData?.awards.map((award) => {
+                      {pageData?.awards.map((award, index) => {
                         return (
-                          <li class="mb-1">
+                          <li className="mb-1" key={index}>
                             <a
                               className="body-large"
                               href={award?.link?.url}
@@ -302,9 +329,9 @@ export default function Project(props) {
                   <ScrollAnimate>
                     <h4 className="underline">Publications</h4>
                     <ul>
-                      {pageData?.publications.map((publication) => {
+                      {pageData?.publications.map((publication, index) => {
                         return (
-                          <li class="mb-1">
+                          <li className="mb-1" key={index}>
                             <a
                               className="body-large"
                               href={publication?.link?.url}

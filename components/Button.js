@@ -1,9 +1,9 @@
 import { Arrow } from "./Arrow"
 
 export const Button = (props) => {
-  const { className, link, text, theme, onClick } = props
+  const { className, link, text, theme, onClick, as: Tag = "a" } = props
   return (
-    <a
+    <Tag
       href={link}
       className={`button-row ${theme === "dark" ? "dark" : ""} ${className}`}
       onClick={onClick}
@@ -20,7 +20,7 @@ export const Button = (props) => {
           <Arrow theme={`${theme === "dark" ? "dark" : ""}`} />
         </span>
       </div>
-    </a>
+    </Tag>
   )
 }
 

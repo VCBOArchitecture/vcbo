@@ -106,9 +106,9 @@ export default function Home(props) {
               <div></div>
             </div>
             <Slider {...settings}>
-              {homepage?.data?.carousel.map((item) => {
+              {homepage?.data?.carousel.map((item, index) => {
                 return (
-                  <div className="img-container">
+                  <div className="img-container" key={index}>
                     <img src={item?.image?.url} />
                   </div>
                 )

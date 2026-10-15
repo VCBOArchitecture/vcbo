@@ -49,8 +49,6 @@ export default function Article(props) {
       document.body.classList.remove("sector")
     }
     setLoaded(true)
-
-    console.log({ position })
   }, [])
 
   const firstNameField =
@@ -97,7 +95,6 @@ export default function Article(props) {
   }
 
   const submitForm = (e) => {
-    console.log({ formState })
     e.preventDefault()
     fetch("/", {
       method: "POST",
