@@ -1,0 +1,17 @@
+# The audit's redirects live in next.config.js so they move with the code.
+# These two are repeated here because Netlify serves /services.html and
+# /projects.html as copies of the prerendered pages before Next.js runs, so
+# only a forced Netlify redirect can override them while the site is hosted
+# on Netlify.
+
+[[redirects]]
+  from = "/services.html"
+  to = "/services"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/projects.html"
+  to = "/projects"
+  status = 301
+  force = true
