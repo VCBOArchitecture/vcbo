@@ -157,6 +157,7 @@ export default function Sectors(props) {
                       ? "https://images.prismic.io/vcbo/f1555895-ef3f-4b44-8084-8528938bdd79_fallback-image.png?auto=compress,format"
                       : project?.data?.hero_image?.url
                   }
+                  alt={project?.data?.hero_image?.alt}
                   url={project?.url}
                 />
               </ScrollAnimate>

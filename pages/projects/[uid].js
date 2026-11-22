@@ -60,6 +60,8 @@ export default function Project(props) {
   const [sliderIndex, setSliderIndex] = useState(1)
 
   const pageData = page?.data
+  // Images without Prismic alt text fall back to the project name
+  const projectName = pageData?.name[0]?.text || ""
 
   useEffect(() => {
     if (process.browser) {
@@ -178,6 +180,7 @@ export default function Project(props) {
                 <img
                   className="block w-full mt-10 md:mt-24 project-full-image"
                   src={pageData?.hero_image?.url}
+                  alt={pageData?.hero_image?.alt || projectName}
                 />
               </ScrollAnimate>
             ) : (
@@ -188,6 +191,7 @@ export default function Project(props) {
                       <img
                         className="w-full"
                         src={item.image.url}
+                        alt={item.image.alt || projectName}
                         key={index}
                       />
                     )
@@ -266,6 +270,7 @@ export default function Project(props) {
                   <img
                     className="w-full"
                     src={pageData?.content_image_1?.url}
+                    alt={pageData?.content_image_1?.alt || projectName}
                   />
                 </ScrollAnimate>
               </div>
@@ -289,6 +294,7 @@ export default function Project(props) {
                             <img
                               className="w-full"
                               src={item.image.url}
+                              alt={item.image.alt || projectName}
                               key={index}
                             />
                           )
@@ -311,6 +317,7 @@ export default function Project(props) {
                   <img
                     className="w-full  project-full-image"
                     src={pageData?.hero_image_2?.url}
+                    alt={pageData?.hero_image_2?.alt || projectName}
                   />
                 </ScrollAnimate>
               </div>
@@ -381,6 +388,7 @@ export default function Project(props) {
                   <img
                     className="w-full"
                     src={pageData?.content_image_2?.url}
+                    alt={pageData?.content_image_2?.alt || projectName}
                   />
                 </ScrollAnimate>
               </div>
@@ -389,6 +397,7 @@ export default function Project(props) {
                   <img
                     className="w-full mb-8"
                     src={pageData?.content_image_3?.url}
+                    alt={pageData?.content_image_3?.alt || projectName}
                   />
                 </ScrollAnimate>
                 <ScrollAnimate className="concluding-statement">

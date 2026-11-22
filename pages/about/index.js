@@ -33,6 +33,10 @@ export default function About(props) {
     setLoaded(true)
   }, [])
 
+  // Prismic alt text, falling back to the image's caption, then the page title
+  const altText = (image, caption) =>
+    image?.alt || caption?.[0]?.text || about?.data?.title_text[0]?.text || ""
+
   return (
     <>
       <Head>
@@ -67,7 +71,13 @@ export default function About(props) {
           </div>
           <div className="col-span-8 md:col-span-7 md:col-start-3">
             <ScrollAnimate>
-              <img src={about?.data?.featured_image?.url} />
+              <img
+                src={about?.data?.featured_image?.url}
+                alt={altText(
+                  about?.data?.featured_image,
+                  about?.data?.featured_image_caption
+                )}
+              />
               <p className="image-caption">
                 {about?.data?.featured_image_caption[0]?.text}
               </p>
@@ -91,25 +101,49 @@ export default function About(props) {
           </div>
           <ScrollAnimate className="grid col-span-8 mx-auto grid-cols-8 mt-20 md:mt-0">
             <div className="col-span-4 md:col-span-2 col-start-1 w-11/12 mx-auto">
-              <img src={about?.data?.grid_image_1?.url} />
+              <img
+                src={about?.data?.grid_image_1?.url}
+                alt={altText(
+                  about?.data?.grid_image_1,
+                  about?.data?.grid_image_1_caption
+                )}
+              />
               <p className="image-caption">
                 {about?.data?.grid_image_1_caption[0]?.text}
               </p>
             </div>
             <div className="col-span-4 md:col-span-2 col-start-5 md:col-start-3 mt-10 md:mt-96 pt-20 w-11/12 md:mx-auto">
-              <img src={about?.data?.grid_image_2?.url} />
+              <img
+                src={about?.data?.grid_image_2?.url}
+                alt={altText(
+                  about?.data?.grid_image_2,
+                  about?.data?.grid_image_2_caption
+                )}
+              />
               <p className="image-caption">
                 {about?.data?.grid_image_2_caption[0]?.text}
               </p>
             </div>
             <div className="col-span-4 md:col-span-2 col-start-1 md:col-start-5 mt-40 md:mt-56 w-11/12 mx-auto">
-              <img src={about?.data?.grid_image_3?.url} />
+              <img
+                src={about?.data?.grid_image_3?.url}
+                alt={altText(
+                  about?.data?.grid_image_3,
+                  about?.data?.grid_image_3_caption
+                )}
+              />
               <p className="image-caption">
                 {about?.data?.grid_image_3_caption[0]?.text}
               </p>
             </div>
             <div className="col-span-4 md:col-span-2 col-start-5 md:col-start-7 mt-4 md:mt-56 w-11/12">
-              <img src={about?.data?.grid_image_4?.url} />
+              <img
+                src={about?.data?.grid_image_4?.url}
+                alt={altText(
+                  about?.data?.grid_image_4,
+                  about?.data?.grid_image_4_caption
+                )}
+              />
               <p className="image-caption">
                 {about?.data?.grid_image_4_caption[0]?.text}
               </p>
@@ -127,7 +161,13 @@ export default function About(props) {
           </div>
           <div className="col-start-3 col-span-6 md:col-start-3 mt-8 md:mt-20 md:col-span-4">
             <ScrollAnimate>
-              <img src={about?.data?.featured_image_2?.url} />
+              <img
+                src={about?.data?.featured_image_2?.url}
+                alt={altText(
+                  about?.data?.featured_image_2,
+                  about?.data?.featured_image_2_caption
+                )}
+              />
               <p className="image-caption">
                 {about?.data?.featured_image_2_caption[0]?.text}
               </p>

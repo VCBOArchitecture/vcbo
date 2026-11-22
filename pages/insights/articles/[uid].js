@@ -2,7 +2,7 @@ import ScrollAnimate from "../../../components/ScrollAnimate"
 import { useEffect, useState } from "react"
 import { createClient } from "../../../prismicio"
 import * as prismicH from "@prismicio/helpers"
-import { PrismicRichText } from "@prismicio/react"
+import { PrismicLink, PrismicRichText } from "@prismicio/react"
 import Link from "next/link"
 import { Lines } from "../../../components/Lines"
 import { BackArrow } from "../../../components/BackArrow"
@@ -106,7 +106,15 @@ export default function Article(props) {
           </div>
           <div className="col-span-4 md:col-span-2">
             <ScrollAnimate className="article-hero">
-              <img src={article?.data?.hero_image?.url} />
+              <img
+                src={article?.data?.hero_image?.url}
+                alt={
+                  article?.data?.hero_image?.alt ||
+                  article?.data?.hero_image_caption[0]?.text ||
+                  article?.data?.title[0]?.text ||
+                  ""
+                }
+              />
               <p className="image-caption">
                 {article?.data?.hero_image_caption[0]?.text}
               </p>
@@ -115,7 +123,31 @@ export default function Article(props) {
         </div>
         <div className="grid grid-cols-4 mt-10 md:mt-40">
           <div className="col-start-1 md:col-start-2 col-span-4 md:col-span-2 article-body ml-4 mr-4">
-            <PrismicRichText field={article?.data?.content} />
+            <PrismicRichText
+              field={article?.data?.content}
+              components={{
+                // Prismic's default image markup, except images without alt
+                // text fall back to the article title
+                image: ({ node, key }) => {
+                  const img = (
+                    <img
+                      src={node.url}
+                      alt={node.alt || article?.data?.title[0]?.text || ""}
+                      data-copyright={node.copyright || undefined}
+                    />
+                  )
+                  return (
+                    <p className="block-img" key={key}>
+                      {node.linkTo ? (
+                        <PrismicLink field={node.linkTo}>{img}</PrismicLink>
+                      ) : (
+                        img
+                      )}
+                    </p>
+                  )
+                },
+              }}
+            />
           </div>
         </div>
       </div>

@@ -109,7 +109,14 @@ export default function Home(props) {
               {homepage?.data?.carousel.map((item, index) => {
                 return (
                   <div className="img-container" key={index}>
-                    <img src={item?.image?.url} />
+                    <img
+                      src={item?.image?.url}
+                      alt={
+                        item?.image?.alt ||
+                        homepage?.data?.heading[0]?.text ||
+                        ""
+                      }
+                    />
                   </div>
                 )
               })}
@@ -155,7 +162,14 @@ export default function Home(props) {
         <div className="grid grid-cols-4 mt-40">
           <div className="col-start-3 col-span-1 md:col-start-2 md:col-span-1">
             <ScrollAnimate>
-              <img src={homepage?.data?.text_blurb_2[0]?.small_image?.url} />
+              <img
+                src={homepage?.data?.text_blurb_2[0]?.small_image?.url}
+                alt={
+                  homepage?.data?.text_blurb_2[0]?.small_image?.alt ||
+                  homepage?.data?.text_blurb_2[0]?.title[0]?.text ||
+                  ""
+                }
+              />
             </ScrollAnimate>
           </div>
         </div>
@@ -174,6 +188,11 @@ export default function Home(props) {
               <img
                 className="w-full"
                 src={homepage?.data?.text_blurb_2[0]?.large_image?.url}
+                alt={
+                  homepage?.data?.text_blurb_2[0]?.large_image?.alt ||
+                  homepage?.data?.text_blurb_2[0]?.title[0]?.text ||
+                  ""
+                }
               />
             </div>
           </div>
@@ -195,6 +214,11 @@ export default function Home(props) {
               <img
                 className="col-span-4 w-full homepage-full-image"
                 src={homepage?.data?.text_blurb_3[0]?.full_width_image?.url}
+                alt={
+                  homepage?.data?.text_blurb_3[0]?.full_width_image?.alt ||
+                  homepage?.data?.text_blurb_3[0]?.title[0]?.text ||
+                  ""
+                }
               />
             </ScrollAnimate>
           </div>
@@ -233,6 +257,11 @@ export default function Home(props) {
                 <img
                   className="w-full"
                   src={homepage?.data?.text_blurb_4[0]?.image?.url}
+                  alt={
+                    homepage?.data?.text_blurb_4[0]?.image?.alt ||
+                    homepage?.data?.text_blurb_4[0]?.title[0]?.text ||
+                    ""
+                  }
                 />
               </ScrollAnimate>
             </div>

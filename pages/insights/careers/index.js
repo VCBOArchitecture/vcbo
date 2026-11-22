@@ -64,7 +64,14 @@ export default function Careers(props) {
             </ScrollAnimate>
           </div>
           <ScrollAnimate className="col-span-4 md:col-span-2 mt-12 md:mt-0">
-            <img src={careers?.data?.featured_image?.url} />
+            <img
+              src={careers?.data?.featured_image?.url}
+              alt={
+                careers?.data?.featured_image?.alt ||
+                careers?.data?.headline[0]?.text ||
+                ""
+              }
+            />
           </ScrollAnimate>
         </div>
         <div className="grid grid-cols-4 mt-24 md:mt-60">

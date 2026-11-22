@@ -294,7 +294,7 @@ export default function Article(props) {
               </label>
               <div className="file-outer">
                 <div className="upload-text text-center">
-                  <img className="m-auto" src="/cloud.png" />
+                  <img className="m-auto" src="/cloud.png" alt="" />
                   <p className="uppercase text-xs font-medium">
                     Click to upload resume
                   </p>
@@ -316,7 +316,7 @@ export default function Article(props) {
               </label>
               <div className="file-outer">
                 <div className="upload-text text-center">
-                  <img className="m-auto" src="/cloud.png" />
+                  <img className="m-auto" src="/cloud.png" alt="" />
                   <p className="uppercase text-xs font-medium">
                     Click to upload cover letter
                   </p>

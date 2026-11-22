@@ -94,6 +94,11 @@ export default function Services(props) {
             <img
               className="col-start-1 md:col-start-3 col-span-4 md:col-span-2 w-full mt-10 md:mt-60"
               src={unlistedPage?.data?.hero_image?.url}
+              alt={
+                unlistedPage?.data?.hero_image?.alt ||
+                unlistedPage?.data?.heading[0]?.text ||
+                ""
+              }
             />
           </ScrollAnimate>
         </div>
@@ -114,6 +119,7 @@ export default function Services(props) {
                 title={item?.title[0]?.text}
                 specialty={item?.sub_heading[0]?.text}
                 image={item?.image?.url}
+                alt={item?.image?.alt}
                 url={item?.link?.url}
                 target={item?.link?.target}
               />

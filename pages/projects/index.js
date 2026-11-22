@@ -136,6 +136,7 @@ export default function Projects(props) {
                         ? "https://images.prismic.io/vcbo/f1555895-ef3f-4b44-8084-8528938bdd79_fallback-image.png?auto=compress,format"
                         : project?.project?.data?.hero_image?.url
                     }
+                    alt={project?.project?.data?.hero_image?.alt}
                     sector={sectorInfo?.data?.name[0]?.text}
                     blurb={sectorInfo?.data?.description[0]?.text}
                     projectLink={project?.project?.data?.sector?.url}

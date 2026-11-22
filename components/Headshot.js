@@ -4,6 +4,7 @@ import { useState } from "react"
 export const Headshot = (props) => {
   const {
     image,
+    alt,
     name,
     title,
     paragraph,
@@ -15,7 +16,7 @@ export const Headshot = (props) => {
 
   return (
     <div className={className} onClick={onClick}>
-      <img src={image} className="w-full" />
+      <img src={image} alt={alt || name || ""} className="w-full" />
       <div className="headshot-top-content flex justify-between items-center ml-4">
         <span>
           <p className="leader-title font-medium mt-4">{name}</p>
