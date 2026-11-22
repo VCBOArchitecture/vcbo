@@ -3,8 +3,8 @@ import { useEffect, useState } from "react"
 import { createClient } from "../../../prismicio"
 import { Article } from "../../../components/Article"
 import { Lines } from "../../../components/Lines"
-import Head from "next/head"
 import FilterResults from "react-filter-search"
+import { SeoHead } from "../../../components/SeoHead"
 
 export async function getStaticProps({ previewData }) {
   const client = createClient({ previewData })
@@ -17,9 +17,12 @@ export async function getStaticProps({ previewData }) {
   const etcPage = await client.getByUID("etc_page", "etc-page")
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
+  const settings = await client
+    .getSingle("site_settings")
+    .catch(() => null)
 
   return {
-    props: { articles, etcPage, footer, navigation },
+    props: { articles, etcPage, footer, navigation, settings },
   }
 }
 
@@ -124,26 +127,7 @@ export default function Articles(props) {
 
   return (
     <>
-      <Head>
-        <title>{etcPage?.data?.meta_title[0]?.text}</title>
-        <meta
-          name="description"
-          content={etcPage?.data?.meta_description[0]?.text}
-          key="desc"
-        />
-        <meta
-          property="og:title"
-          content={etcPage?.data?.social_meta_title[0]?.text}
-        />
-        <meta
-          property="og:description"
-          content={etcPage?.data?.social_meta_description[0]?.text}
-        />
-        <meta
-          property="og:image"
-          content={etcPage?.data?.social_meta_image?.url}
-        />
-      </Head>
+      <SeoHead data={etcPage?.data} pageName="Insights" />
       <Lines loaded={loaded} />
       <div className="container mx-auto mt-10 md:mt-40 articles px-4 md:px-0 mb-40">
         <ScrollAnimate className="mb-10 md:mb-16">

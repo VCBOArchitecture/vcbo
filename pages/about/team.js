@@ -7,6 +7,7 @@ import { createClient } from "../../prismicio"
 import { BackArrow } from "../../components/BackArrow"
 import Link from "next/link"
 import TeamDropdown from "../../components/teamDropdown"
+import { SeoHead } from "../../components/SeoHead"
 
 export async function getStaticProps({ previewData }) {
   const client = createClient({ previewData })
@@ -14,9 +15,12 @@ export async function getStaticProps({ previewData }) {
   const team = await client.getByUID("team_page", "team")
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
+  const settings = await client
+    .getSingle("site_settings")
+    .catch(() => null)
 
   return {
-    props: { team, footer, navigation }, // Will be passed to the sectors component as props
+    props: { team, footer, navigation, settings }, // Will be passed to the sectors component as props
   }
 }
 
@@ -36,6 +40,7 @@ export default function About(props) {
 
   return (
     <>
+      <SeoHead data={team?.data} pageName="Team" />
       <Lines loaded={loaded} />
       <div className="container mx-auto px-4 md:px-0 mb-60">
         <div className="breadcrumb flex col-span-4 relative mt-20">

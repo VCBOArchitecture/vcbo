@@ -9,7 +9,8 @@ import { repositoryName } from "../prismicio"
 import Head from "next/head"
 import Script from "next/script"
 import { useRouter } from "next/router"
-import { SITE_URL } from "../lib/site"
+import { SITE_NAME, SITE_URL } from "../lib/site"
+import { SiteSettingsContext } from "../components/SeoHead"
 
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter()
@@ -42,13 +43,7 @@ export default function MyApp({ Component, pageProps }) {
       <PrismicProvider internalLinkComponent={(props) => <Link {...props} />}>
         <PrismicPreview repositoryName={repositoryName}>
           <Head>
-            <title>
-              VCBO | Architecture, Interiors, Planning, and Sustainability
-            </title>
-            <meta
-              name="description"
-              content="VCBO | Architecture, Interiors, Planning, and Sustainability"
-            />
+            <title>{SITE_NAME}</title>
             {!isErrorPage && (
               <link
                 rel="canonical"
@@ -57,11 +52,13 @@ export default function MyApp({ Component, pageProps }) {
               />
             )}
           </Head>
-          <div className="page-wrapper relative">
-            <Header data={pageProps?.navigation?.data} />
-            <Component {...pageProps} />
-            <Footer data={pageProps?.footer?.data} />
-          </div>
+          <SiteSettingsContext.Provider value={pageProps?.settings?.data}>
+            <div className="page-wrapper relative">
+              <Header data={pageProps?.navigation?.data} />
+              <Component {...pageProps} />
+              <Footer data={pageProps?.footer?.data} />
+            </div>
+          </SiteSettingsContext.Provider>
         </PrismicPreview>
       </PrismicProvider>
     </>

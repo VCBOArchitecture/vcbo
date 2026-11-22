@@ -1,0 +1,17 @@
+{
+  "id": "site_settings",
+  "label": "Site Settings",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "SEO": {
+      "site_title_suffix": {
+        "type": "Text",
+        "config": {
+          "label": "Site Title Suffix",
+          "placeholder": "Added to the end of every page's title, e.g. | VCBO Architecture. Don't include it in individual Meta Titles."
+        }
+      }
+    }
+  }
+}

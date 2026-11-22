@@ -5,7 +5,7 @@ import { HeadshotWrapper } from "../../components/HeadshotWrapper"
 import { createClient } from "../../prismicio"
 import { PrismicRichText } from "@prismicio/react"
 import { Button } from "../../components/Button"
-import Head from "next/head"
+import { SeoHead } from "../../components/SeoHead"
 
 export async function getStaticProps({ previewData }) {
   const client = createClient({ previewData })
@@ -13,9 +13,12 @@ export async function getStaticProps({ previewData }) {
   const about = await client.getByUID("about_page", "about")
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
+  const settings = await client
+    .getSingle("site_settings")
+    .catch(() => null)
 
   return {
-    props: { about, footer, navigation }, // Will be passed to the sectors component as props
+    props: { about, footer, navigation, settings }, // Will be passed to the sectors component as props
   }
 }
 
@@ -42,26 +45,7 @@ export default function About(props) {
 
   return (
     <>
-      <Head>
-        <title>{about?.data?.meta_title[0]?.text}</title>
-        <meta
-          name="description"
-          content={about?.data?.meta_description[0]?.text}
-          key="desc"
-        />
-        <meta
-          property="og:title"
-          content={about?.data?.social_meta_title[0]?.text}
-        />
-        <meta
-          property="og:description"
-          content={about?.data?.social_meta_description[0]?.text}
-        />
-        <meta
-          property="og:image"
-          content={about?.data?.social_meta_image?.url}
-        />
-      </Head>
+      <SeoHead data={about?.data} pageName="About" />
       <Lines loaded={loaded} />
       <div className="about-page container mx-auto px-4 md:px-0 mb-60">
         {h1 && (

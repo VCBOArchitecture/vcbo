@@ -11,7 +11,7 @@ import { Lines } from "../../../components/Lines"
 import ScrollTrigger from "react-scroll-trigger"
 import { BackArrow } from "../../../components/BackArrow"
 import Link from "next/link"
-import Head from "next/head"
+import { SeoHead } from "../../../components/SeoHead"
 
 // Fetch sector content from prismic
 export async function getStaticProps({ params, previewData }) {
@@ -31,6 +31,9 @@ export async function getStaticProps({ params, previewData }) {
   })
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
+  const settings = await client
+    .getSingle("site_settings")
+    .catch(() => null)
 
   return {
     props: {
@@ -39,7 +42,7 @@ export async function getStaticProps({ params, previewData }) {
       dropdownItems,
       additionalProjects,
       footer,
-      navigation,
+      navigation, settings,
     },
   }
 }
@@ -177,23 +180,7 @@ export default function Sectors(props) {
 
   return (
     <>
-      <Head>
-        <title>{pageData?.meta_title[0]?.text}</title>
-        <meta
-          name="description"
-          content={pageData?.meta_description[0]?.text}
-          key="desc"
-        />
-        <meta
-          property="og:title"
-          content={pageData?.social_meta_title[0]?.text}
-        />
-        <meta
-          property="og:description"
-          content={pageData?.social_meta_description[0]?.text}
-        />
-        <meta property="og:image" content={pageData?.social_meta_image?.url} />
-      </Head>
+      <SeoHead data={pageData} pageName={pageData?.name?.[0]?.text} />
       <Lines loaded={loaded} />
       <div className="container mx-auto sector-page px-4 md:px-0 mb-60">
         <div className="breadcrumb flex col-span-4 relative mb-10 md:mt-20 mt-10">
