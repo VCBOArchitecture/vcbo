@@ -60,7 +60,7 @@ export const AdditionalProject = (props) => {
         >
           {images?.map((item, index) => (
             <SwiperSlide key={index}>
-              <img src={item.image.url} />
+              <img src={item.image.url} alt={item.image.alt || name || ""} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -87,7 +87,12 @@ export const AdditionalProject = (props) => {
           >
             {images?.map((item, index) => (
               <SwiperSlide key={index} onClick={() => triggerModal("close")}>
-                <img src={item.image.url} width="1080" height="740" />
+                <img
+                  src={item.image.url}
+                  alt={item.image.alt || name || ""}
+                  width="1080"
+                  height="740"
+                />
               </SwiperSlide>
             ))}
           </Swiper>

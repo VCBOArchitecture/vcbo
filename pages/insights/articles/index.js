@@ -3,8 +3,8 @@ import { useEffect, useState } from "react"
 import { createClient } from "../../../prismicio"
 import { Article } from "../../../components/Article"
 import { Lines } from "../../../components/Lines"
-import Head from "next/head"
 import FilterResults from "react-filter-search"
+import { SeoHead } from "../../../components/SeoHead"
 
 export async function getStaticProps({ previewData }) {
   const client = createClient({ previewData })
@@ -17,14 +17,18 @@ export async function getStaticProps({ previewData }) {
   const etcPage = await client.getByUID("etc_page", "etc-page")
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
+  const settings = await client
+    .getSingle("site_settings")
+    .catch(() => null)
 
   return {
-    props: { articles, etcPage, footer, navigation },
+    props: { articles, etcPage, footer, navigation, settings },
   }
 }
 
 export default function Articles(props) {
   const { articles, etcPage } = props
+  const h1 = etcPage?.data?.h1
 
   const [loaded, setLoaded] = useState(false)
   const [tags, setTags] = useState([])
@@ -123,33 +127,27 @@ export default function Articles(props) {
 
   return (
     <>
-      <Head>
-        <title>{etcPage?.data?.meta_title[0]?.text}</title>
-        <meta
-          name="description"
-          content={etcPage?.data?.meta_description[0]?.text}
-          key="desc"
-        />
-        <meta
-          property="og:title"
-          content={etcPage?.data?.social_meta_title[0]?.text}
-        />
-        <meta
-          property="og:description"
-          content={etcPage?.data?.social_meta_description[0]?.text}
-        />
-        <meta
-          property="og:image"
-          content={etcPage?.data?.social_meta_image?.url}
-        />
-      </Head>
+      <SeoHead data={etcPage?.data} pageName="Insights" />
       <Lines loaded={loaded} />
       <div className="container mx-auto mt-10 md:mt-40 articles px-4 md:px-0 mb-40">
+        <ScrollAnimate className="mb-10 md:mb-16">
+          {h1 && (
+            <p
+              onClick={() => resetFilter()}
+              className="page-header-label etc-title"
+            >
+              Insights
+            </p>
+          )}
+          <h1
+            onClick={h1 ? undefined : () => resetFilter()}
+            className={`page-header-title ${h1 ? "" : "etc-title"}`}
+          >
+            {h1 || "Insights"}
+          </h1>
+        </ScrollAnimate>
         <div className="grid grid-cols-4">
           <ScrollAnimate>
-            <h2 onClick={() => resetFilter()} className="etc-title">
-              INSIGHTS
-            </h2>
             <input
               className="search-filter cols-2 md:cols-4"
               placeholder="SEARCH"

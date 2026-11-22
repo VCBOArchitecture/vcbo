@@ -8,8 +8,17 @@ import { PrismicPreview } from "@prismicio/next"
 import { repositoryName } from "../prismicio"
 import Head from "next/head"
 import Script from "next/script"
+import { useRouter } from "next/router"
+import { SITE_NAME, SITE_URL } from "../lib/site"
+import { SiteSettingsContext } from "../components/SeoHead"
 
 export default function MyApp({ Component, pageProps }) {
+  const router = useRouter()
+  // Self-referencing canonical without the query string, so links with
+  // tracking parameters (?ref=, ?source=, ...) don't split ranking credit
+  const isErrorPage = ["/404", "/500", "/_error"].includes(router.pathname)
+  const canonicalPath = router.asPath.split(/[?#]/)[0]
+
   return (
     <>
       <Script
@@ -34,19 +43,22 @@ export default function MyApp({ Component, pageProps }) {
       <PrismicProvider internalLinkComponent={(props) => <Link {...props} />}>
         <PrismicPreview repositoryName={repositoryName}>
           <Head>
-            <title>
-              VCBO | Architecture, Interiors, Planning, and Sustainability
-            </title>
-            <meta
-              name="description"
-              content="VCBO | Architecture, Interiors, Planning, and Sustainability"
-            />
+            <title>{SITE_NAME}</title>
+            {!isErrorPage && (
+              <link
+                rel="canonical"
+                href={`${SITE_URL}${canonicalPath}`}
+                key="canonical"
+              />
+            )}
           </Head>
-          <div className="page-wrapper relative">
-            <Header data={pageProps?.navigation?.data} />
-            <Component {...pageProps} />
-            <Footer data={pageProps?.footer?.data} />
-          </div>
+          <SiteSettingsContext.Provider value={pageProps?.settings?.data}>
+            <div className="page-wrapper relative">
+              <Header data={pageProps?.navigation?.data} />
+              <Component {...pageProps} />
+              <Footer data={pageProps?.footer?.data} />
+            </div>
+          </SiteSettingsContext.Provider>
         </PrismicPreview>
       </PrismicProvider>
     </>

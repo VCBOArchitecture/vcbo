@@ -29,6 +29,7 @@ export const HeadshotWrapper = (props) => {
           <ScrollAnimate key={index}>
             <Headshot
               image={item?.headshot?.url}
+              alt={item?.headshot?.alt}
               name={item?.name[0]?.text}
               title={item?.title[0]?.text}
               paragraph={item?.paragraph}

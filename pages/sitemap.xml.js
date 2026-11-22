@@ -1,6 +1,5 @@
 import { createClient } from "../prismicio"
-
-const SITE_URL = "https://vcbo.com"
+import { SITE_URL } from "../lib/site"
 
 function generateSiteMap(pages) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -38,6 +37,7 @@ export async function getServerSideProps({ res }) {
     { loc: `${SITE_URL}/about/team`, priority: "0.8" },
     { loc: `${SITE_URL}/services`, priority: "0.8" },
     { loc: `${SITE_URL}/projects`, priority: "0.9" },
+    { loc: `${SITE_URL}/insights/articles`, priority: "0.7" },
     { loc: `${SITE_URL}/insights/careers`, priority: "0.7" },
   ]
 

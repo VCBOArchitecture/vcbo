@@ -11,7 +11,7 @@ import { BackArrow } from "../../components/BackArrow"
 import { Lines } from "../../components/Lines"
 import { NextArrow, PrevArrow } from "../../components/CarouselArrow"
 import Link from "next/link"
-import Head from "next/head"
+import { SeoHead } from "../../components/SeoHead"
 
 // Fetch project content from prismic
 export async function getStaticProps({ params, previewData }) {
@@ -32,9 +32,12 @@ export async function getStaticProps({ params, previewData }) {
     .filter(Boolean)
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
+  const settings = await client
+    .getSingle("site_settings")
+    .catch(() => null)
 
   return {
-    props: { page, projects, specialtyOrder, footer, navigation },
+    props: { page, projects, specialtyOrder, footer, navigation, settings },
   }
 }
 
@@ -60,6 +63,8 @@ export default function Project(props) {
   const [sliderIndex, setSliderIndex] = useState(1)
 
   const pageData = page?.data
+  // Images without Prismic alt text fall back to the project name
+  const projectName = pageData?.name[0]?.text || ""
 
   useEffect(() => {
     if (process.browser) {
@@ -135,23 +140,7 @@ export default function Project(props) {
 
   return (
     <>
-      <Head>
-        <title>{pageData?.meta_title[0]?.text}</title>
-        <meta
-          name="description"
-          content={pageData?.meta_description[0]?.text}
-          key="desc"
-        />
-        <meta
-          property="og:title"
-          content={pageData?.social_meta_title[0]?.text}
-        />
-        <meta
-          property="og:description"
-          content={pageData?.social_meta_description[0]?.text}
-        />
-        <meta property="og:image" content={pageData?.social_meta_image?.url} />
-      </Head>
+      <SeoHead data={pageData} pageName={pageData?.name?.[0]?.text} />
       <Lines loaded={loaded} />
       <div className="container mx-auto projects-page relative px-4 md:px-0 mb-60">
         <div className="grid grid-cols-4 mt-10 md:mt-20 gap-x-8">
@@ -178,6 +167,7 @@ export default function Project(props) {
                 <img
                   className="block w-full mt-10 md:mt-24 project-full-image"
                   src={pageData?.hero_image?.url}
+                  alt={pageData?.hero_image?.alt || projectName}
                 />
               </ScrollAnimate>
             ) : (
@@ -188,6 +178,7 @@ export default function Project(props) {
                       <img
                         className="w-full"
                         src={item.image.url}
+                        alt={item.image.alt || projectName}
                         key={index}
                       />
                     )
@@ -266,6 +257,7 @@ export default function Project(props) {
                   <img
                     className="w-full"
                     src={pageData?.content_image_1?.url}
+                    alt={pageData?.content_image_1?.alt || projectName}
                   />
                 </ScrollAnimate>
               </div>
@@ -289,6 +281,7 @@ export default function Project(props) {
                             <img
                               className="w-full"
                               src={item.image.url}
+                              alt={item.image.alt || projectName}
                               key={index}
                             />
                           )
@@ -311,6 +304,7 @@ export default function Project(props) {
                   <img
                     className="w-full  project-full-image"
                     src={pageData?.hero_image_2?.url}
+                    alt={pageData?.hero_image_2?.alt || projectName}
                   />
                 </ScrollAnimate>
               </div>
@@ -381,6 +375,7 @@ export default function Project(props) {
                   <img
                     className="w-full"
                     src={pageData?.content_image_2?.url}
+                    alt={pageData?.content_image_2?.alt || projectName}
                   />
                 </ScrollAnimate>
               </div>
@@ -389,6 +384,7 @@ export default function Project(props) {
                   <img
                     className="w-full mb-8"
                     src={pageData?.content_image_3?.url}
+                    alt={pageData?.content_image_3?.alt || projectName}
                   />
                 </ScrollAnimate>
                 <ScrollAnimate className="concluding-statement">

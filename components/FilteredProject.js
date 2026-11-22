@@ -2,11 +2,11 @@ import { Button } from "./Button"
 import Link from "next/link"
 
 export const FilteredProject = (props) => {
-  const { title, specialty, image, url, className, target } = props
+  const { title, specialty, image, alt, url, className, target } = props
   return (
     <div className={`filtered-project project-col col-span-2 ${className}`}>
       <Link href={url} className="project-wrapper" target={target}>
-        <img className="w-full" src={image} />
+        <img className="w-full" src={image} alt={alt || title || ""} />
         <div className="flex justify-between my-5 ml-4">
           <div>
             <p className="mb-2 md:mb-0 project-name">{title}</p>

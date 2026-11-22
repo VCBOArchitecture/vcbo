@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 export const Project = (props) => {
-  const { theme, image, sector, blurb, projectLink } = props
+  const { theme, image, alt, sector, blurb, projectLink } = props
   return (
     <div className="project-col col-span-2 md:col-span-1">
       <Link
@@ -13,6 +13,7 @@ export const Project = (props) => {
         <img
           className={`grid-image w-full ${theme === "list" ? "hidden" : ""}`}
           src={image}
+          alt={alt || sector || ""}
         />
         <div className="grid grid-cols-4 justify-between my-5 items-start">
           <h4 className="ml-4">{sector}</h4>
@@ -21,6 +22,7 @@ export const Project = (props) => {
               theme === "grid" ? "hidden" : "max-w-xs"
             }`}
             src={image}
+            alt={alt || sector || ""}
           />
           <div
             className={`${

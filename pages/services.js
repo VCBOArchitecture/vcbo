@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Lines } from "../components/Lines"
 import { createClient } from "../prismicio"
 import { PrismicRichText } from "@prismicio/react"
-import Head from "next/head"
+import { SeoHead } from "../components/SeoHead"
 
 export async function getStaticProps({ previewData }) {
   const client = createClient({ previewData })
@@ -12,9 +12,12 @@ export async function getStaticProps({ previewData }) {
   const services = await client.getByUID("services_page", "services")
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
+  const settings = await client
+    .getSingle("site_settings")
+    .catch(() => null)
 
   return {
-    props: { services, footer, navigation }, // Will be passed to the sectors component as props
+    props: { services, footer, navigation, settings }, // Will be passed to the sectors component as props
   }
 }
 
@@ -52,26 +55,7 @@ export default function Services(props) {
 
   return (
     <>
-      <Head>
-        <title>{services?.data?.meta_title[0]?.text}</title>
-        <meta
-          name="description"
-          content={services?.data?.meta_description[0]?.text}
-          key="desc"
-        />
-        <meta
-          property="og:title"
-          content={services?.data?.social_meta_title[0]?.text}
-        />
-        <meta
-          property="og:description"
-          content={services?.data?.social_meta_description[0]?.text}
-        />
-        <meta
-          property="og:image"
-          content={services?.data?.social_meta_image?.url}
-        />
-      </Head>
+      <SeoHead data={services?.data} pageName="Services" />
       <Lines loaded={loaded} />
       <div className="container mx-auto services-page px-4 md:px-0 mb-60">
         <div
@@ -89,17 +73,21 @@ export default function Services(props) {
                   <img
                     className="pt-32 md:pt-48 block md:pr-16 md:pl-4"
                     src={services?.data?.architecture[0]?.image?.url}
+                    alt={
+                      services?.data?.architecture[0]?.image?.alt ||
+                      "Architecture"
+                    }
                   />
-                  <h1 className="hidden md:block absolute architecture">
+                  <h1 className="hidden md:block absolute architecture service-title">
                     Architecture
                   </h1>
                   <p className="hidden md:block md:ml-4">01</p>
                 </div>
               </a>
             </ScrollAnimate>
-            <h1 className="block md:hidden absolute architecture">
+            <h2 className="block md:hidden absolute architecture service-title">
               Architecture
-            </h1>
+            </h2>
             <p className="block md:hidden">01</p>
           </div>
           <div className="col-span-1 relative item-wrap">
@@ -114,15 +102,21 @@ export default function Services(props) {
                   <img
                     className="block mx-auto design-image md:pr-16 md:pl-4"
                     src={services?.data?.design[0]?.image_1?.url}
+                    alt={
+                      services?.data?.design[0]?.image_1?.alt ||
+                      "Interior Design"
+                    }
                   />
-                  <h1 className="hidden md:block absolute design">
+                  <h2 className="hidden md:block absolute design service-title">
                     Interior Design
-                  </h1>
+                  </h2>
                   <p className="hidden md:block md:ml-4">02</p>
                 </div>
               </a>
             </ScrollAnimate>
-            <h1 className="block md:hidden absolute design">Interior Design</h1>
+            <h2 className="block md:hidden absolute design service-title">
+              Interior Design
+            </h2>
             <p className="block md:hidden">02</p>
           </div>
           <div className="col-span-1 relative item-wrap planning">
@@ -137,15 +131,18 @@ export default function Services(props) {
                   <img
                     className="planning-image block md:pl-4 md:mb-20"
                     src={services?.data?.planning[0]?.image?.url}
+                    alt={services?.data?.planning[0]?.image?.alt || "Planning"}
                   />
-                  <h1 className="hidden md:block absolute planning">
+                  <h2 className="hidden md:block absolute planning service-title">
                     Planning
-                  </h1>
+                  </h2>
                   <p className="hidden md:block md:ml-4">03</p>
                 </div>
               </a>
             </ScrollAnimate>
-            <h1 className="block md:hidden absolute planning">Planning</h1>
+            <h2 className="block md:hidden absolute planning service-title">
+              Planning
+            </h2>
             <p className="block md:hidden">03</p>
           </div>
           <div className="col-span-1 relative item-wrap">
@@ -160,17 +157,21 @@ export default function Services(props) {
                   <img
                     className="block mx-auto sustainability-image md:pr-20 md:pl-4"
                     src={services?.data?.sustainability[0]?.image?.url}
+                    alt={
+                      services?.data?.sustainability[0]?.image?.alt ||
+                      "Sustainability"
+                    }
                   />
-                  <h1 className="hidden md:block absolute sustainability">
+                  <h2 className="hidden md:block absolute sustainability service-title">
                     Sustainability
-                  </h1>
+                  </h2>
                   <p className="hidden md:block md:ml-4">04</p>
                 </div>
               </a>
             </ScrollAnimate>
-            <h1 className="block md:hidden absolute sustainability">
+            <h2 className="block md:hidden absolute sustainability service-title">
               Sustainability
-            </h1>
+            </h2>
             <p className="block md:hidden ">04</p>
           </div>
         </div>
@@ -185,6 +186,9 @@ export default function Services(props) {
               <img
                 className="w-full"
                 src={services?.data?.architecture[0]?.image?.url}
+                alt={
+                  services?.data?.architecture[0]?.image?.alt || "Architecture"
+                }
               />
               <p className="image-caption">
                 {services?.data?.architecture[0]?.image_caption[0]?.text}
@@ -216,6 +220,9 @@ export default function Services(props) {
             <img
               className="col-start-3 col-span-2 w-full"
               src={services?.data?.architecture[0]?.image?.url}
+              alt={
+                services?.data?.architecture[0]?.image?.alt || "Architecture"
+              }
             />
             <p className="image-caption">
               {services?.data?.architecture[0]?.image_caption[0]?.text}
@@ -230,10 +237,18 @@ export default function Services(props) {
           </div>
           <div className="col-start-3 md:col-start-2 col-span-2 md:col-span-1">
             <ScrollAnimate>
-              <img src={services?.data?.design[0]?.image_1?.url} />
+              <img
+                src={services?.data?.design[0]?.image_1?.url}
+                alt={
+                  services?.data?.design[0]?.image_1?.alt || "Interior Design"
+                }
+              />
               <img
                 className="mt-8"
                 src={services?.data?.design[0]?.image_2?.url}
+                alt={
+                  services?.data?.design[0]?.image_2?.alt || "Interior Design"
+                }
               />
               <p className="image-caption">
                 {services?.data?.design[0]?.image_caption[0]?.text}
@@ -259,7 +274,10 @@ export default function Services(props) {
         <div className="grid grid-cols-4 mt-60" id="planning">
           <div className="hidden md:block col-start-1 col-span-2">
             <ScrollAnimate>
-              <img src={services?.data?.planning[0]?.image?.url} />
+              <img
+                src={services?.data?.planning[0]?.image?.url}
+                alt={services?.data?.planning[0]?.image?.alt || "Planning"}
+              />
               <p className="image-caption">
                 {services?.data?.planning[0]?.image_caption[0]?.text}
               </p>
@@ -280,7 +298,10 @@ export default function Services(props) {
               </ScrollAnimate>
               <div className="block md:hidden col-start-1 col-span-4">
                 <ScrollAnimate>
-                  <img src={services?.data?.planning[0]?.image?.url} />
+                  <img
+                    src={services?.data?.planning[0]?.image?.url}
+                    alt={services?.data?.planning[0]?.image?.alt || "Planning"}
+                  />
                   <p className="image-caption">
                     {services?.data?.planning[0]?.image_caption[0]?.text}
                   </p>
@@ -304,7 +325,13 @@ export default function Services(props) {
         <div className="grid grid-cols-4 mt-60" id="sustainability">
           <div className="col-start-1 col-span-2 md:col-span-1">
             <ScrollAnimate>
-              <img src={services?.data?.sustainability[0]?.image?.url} />
+              <img
+                src={services?.data?.sustainability[0]?.image?.url}
+                alt={
+                  services?.data?.sustainability[0]?.image?.alt ||
+                  "Sustainability"
+                }
+              />
               <p className="image-caption">
                 {services?.data?.sustainability[0]?.image_caption[0]?.text}
               </p>

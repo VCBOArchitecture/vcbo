@@ -1,0 +1,25 @@
+# The audit's redirects live in next.config.js so they move with the code.
+# These are repeated here because Netlify answers them before Next.js runs,
+# so only a forced Netlify redirect works while the site is hosted on Netlify:
+# - /services.html and /projects.html are served as copies of the prerendered
+#   pages.
+# - Unknown /projects/* paths get Netlify's 404 straight away, because project
+#   pages are prerendered from a fixed list (fallback: false).
+
+[[redirects]]
+  from = "/services.html"
+  to = "/services"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/projects.html"
+  to = "/projects"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/projects/uts-set-building"
+  to = "/projects/ut-set-building"
+  status = 301
+  force = true

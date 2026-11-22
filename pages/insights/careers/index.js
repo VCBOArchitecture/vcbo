@@ -2,7 +2,7 @@ import ScrollAnimate from "../../../components/ScrollAnimate"
 import { useState, useEffect } from "react"
 import { createClient } from "../../../prismicio"
 import { PrismicRichText } from "@prismicio/react"
-import Head from "next/head"
+import { SeoHead } from "../../../components/SeoHead"
 
 export async function getStaticProps({ previewData }) {
   const client = createClient({ previewData })
@@ -10,9 +10,12 @@ export async function getStaticProps({ previewData }) {
   const careers = await client.getByUID("careers_page", "careers")
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
+  const settings = await client
+    .getSingle("site_settings")
+    .catch(() => null)
 
   return {
-    props: { careers, footer, navigation }, // Will be passed to the sectors component as props
+    props: { careers, footer, navigation, settings }, // Will be passed to the sectors component as props
   }
 }
 
@@ -33,26 +36,7 @@ export default function Careers(props) {
 
   return (
     <>
-      <Head>
-        <title>{careers?.data?.meta_title[0]?.text}</title>
-        <meta
-          name="description"
-          content={careers?.data?.meta_description[0]?.text}
-          key="desc"
-        />
-        <meta
-          property="og:title"
-          content={careers?.data?.social_meta_title[0]?.text}
-        />
-        <meta
-          property="og:description"
-          content={careers?.data?.social_meta_description[0]?.text}
-        />
-        <meta
-          property="og:image"
-          content={careers?.data?.social_meta_image?.url}
-        />
-      </Head>
+      <SeoHead data={careers?.data} pageName="Careers" />
       <div className="container mx-auto mt-40 px-4 md:px-0 mb-60 careers-page">
         <div className="grid grid-cols-4">
           <div className="col-span-4 md:col-span-2 flex content-end flex-wrap">
@@ -64,7 +48,14 @@ export default function Careers(props) {
             </ScrollAnimate>
           </div>
           <ScrollAnimate className="col-span-4 md:col-span-2 mt-12 md:mt-0">
-            <img src={careers?.data?.featured_image?.url} />
+            <img
+              src={careers?.data?.featured_image?.url}
+              alt={
+                careers?.data?.featured_image?.alt ||
+                careers?.data?.headline[0]?.text ||
+                ""
+              }
+            />
           </ScrollAnimate>
         </div>
         <div className="grid grid-cols-4 mt-24 md:mt-60">

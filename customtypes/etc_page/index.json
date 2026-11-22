@@ -14,6 +14,13 @@
       }
     },
     "SEO": {
+      "h1": {
+        "type": "Text",
+        "config": {
+          "label": "H1 (main page heading)",
+          "placeholder": "e.g. Insights and Articles from VCBO Architecture. Leave blank to keep the current heading."
+        }
+      },
       "meta_title": {
         "type": "StructuredText",
         "config": {

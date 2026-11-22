@@ -4,8 +4,8 @@ import { useEffect, useState } from "react"
 import { Lines } from "../components/Lines"
 import { createClient } from "../prismicio"
 import { PrismicRichText } from "@prismicio/react"
-import Head from "next/head"
 import { FilteredProject } from "../components/FilteredProject"
+import { SeoHead } from "../components/SeoHead"
 
 export async function getStaticProps({ previewData }) {
   const client = createClient({ previewData })
@@ -13,9 +13,12 @@ export async function getStaticProps({ previewData }) {
   const unlistedPage = await client.getByUID("unlisted_page", "vault")
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
+  const settings = await client
+    .getSingle("site_settings")
+    .catch(() => null)
 
   return {
-    props: { unlistedPage, footer, navigation }, // Will be passed to the sectors component as props
+    props: { unlistedPage, footer, navigation, settings }, // Will be passed to the sectors component as props
   }
 }
 
@@ -54,26 +57,10 @@ export default function Services(props) {
 
   return (
     <>
-      <Head>
-        {/* <title>{services?.data?.meta_title[0]?.text}</title>
-        <meta
-          name="description"
-          content={services?.data?.meta_description[0]?.text}
-          key="desc"
-        />
-        <meta
-          property="og:title"
-          content={services?.data?.social_meta_title[0]?.text}
-        />
-        <meta
-          property="og:description"
-          content={services?.data?.social_meta_description[0]?.text}
-        />
-        <meta
-          property="og:image"
-          content={services?.data?.social_meta_image?.url}
-        /> */}
-      </Head>
+      <SeoHead
+        data={unlistedPage?.data}
+        pageName={unlistedPage?.data?.heading?.[0]?.text}
+      />
       <Lines loaded={loaded} />
       <div className="container relative mx-auto services-page px-4 md:px-0 mb-60">
         <h1 className="mt-10 md:mt-60 mb-10 md:mb-20">
@@ -94,6 +81,11 @@ export default function Services(props) {
             <img
               className="col-start-1 md:col-start-3 col-span-4 md:col-span-2 w-full mt-10 md:mt-60"
               src={unlistedPage?.data?.hero_image?.url}
+              alt={
+                unlistedPage?.data?.hero_image?.alt ||
+                unlistedPage?.data?.heading[0]?.text ||
+                ""
+              }
             />
           </ScrollAnimate>
         </div>
@@ -114,6 +106,7 @@ export default function Services(props) {
                 title={item?.title[0]?.text}
                 specialty={item?.sub_heading[0]?.text}
                 image={item?.image?.url}
+                alt={item?.image?.alt}
                 url={item?.link?.url}
                 target={item?.link?.target}
               />

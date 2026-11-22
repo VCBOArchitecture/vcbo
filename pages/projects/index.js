@@ -5,7 +5,7 @@ import { Project } from "../../components/Project"
 import { createClient } from "../../prismicio"
 import SelectDropdown from "../../components/SelectDropdown"
 import { Lines } from "../../components/Lines"
-import Head from "next/head"
+import { SeoHead } from "../../components/SeoHead"
 
 export async function getStaticProps({ previewData }) {
   const client = createClient({ previewData })
@@ -13,6 +13,9 @@ export async function getStaticProps({ previewData }) {
   const allProjects = await client.getAllByType("project")
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
+  const settings = await client
+    .getSingle("site_settings")
+    .catch(() => null)
 
   const sectors = await client.getAllByType("sector", {
     fetchLinks: ["specialty.name", "sector.name", "sector.description"],
@@ -23,12 +26,13 @@ export async function getStaticProps({ previewData }) {
   })
 
   return {
-    props: { sectors, projects, allProjects, footer, navigation }, // Will be passed to the sectors component as props
+    props: { sectors, projects, allProjects, footer, navigation, settings }, // Will be passed to the sectors component as props
   }
 }
 
 export default function Projects(props) {
   const { sectors, projects, allProjects } = props
+  const h1 = projects?.data?.h1
 
   const [loaded, setLoaded] = useState(false)
   const [theme, setTheme] = useState("grid")
@@ -54,39 +58,19 @@ export default function Projects(props) {
   }, [])
   return (
     <>
-      <Head>
-        <title>{projects?.data?.meta_title[0]?.text}</title>
-        <meta
-          name="description"
-          content={projects?.data?.meta_description[0]?.text}
-          key="desc"
-        />
-        <meta
-          property="og:title"
-          content={projects?.data?.social_meta_title[0]?.text}
-        />
-        <meta
-          property="og:description"
-          content={projects?.data?.social_meta_description[0]?.text}
-        />
-        <meta
-          property="og:image"
-          content={projects?.data?.social_meta_image?.url}
-        />
-      </Head>
+      <SeoHead data={projects?.data} pageName="Projects" />
       <Lines loaded={loaded} />
       <div className="container mx-auto z-10 relative px-4 md:px-0 mb-60">
-        <div className="grid grid-cols-4 mt-10 md:mt-40 relative">
-          <div className="col-start-1 col-span-4 md:col-span-2">
-            <ScrollAnimate className="mb-20 md:mb-0">
-              <h2 className="uppercase projects-header">
-                Projects
-                <sup>
-                  <small>{allProjects?.length}</small>
-                </sup>
-              </h2>
-            </ScrollAnimate>
-          </div>
+        <ScrollAnimate className="mt-10 md:mt-40">
+          {h1 && (
+            <p className="page-header-label">
+              Projects<sup>{allProjects?.length}</sup>
+            </p>
+          )}
+          <h1 className="page-header-title">{h1 || "Projects"}</h1>
+        </ScrollAnimate>
+        <div className="grid grid-cols-4 mt-10 md:mt-16 relative">
+          <div className="col-start-1 col-span-4 md:col-span-2"></div>
           <div className="grid col-span-4 md:col-span-2 grid-cols-4 items-center col-start-1 md:col-start-3">
             <div className={`grid grid-cols-2 col-span-2 mx-4 relative`}>
               <div
@@ -136,6 +120,7 @@ export default function Projects(props) {
                         ? "https://images.prismic.io/vcbo/f1555895-ef3f-4b44-8084-8528938bdd79_fallback-image.png?auto=compress,format"
                         : project?.project?.data?.hero_image?.url
                     }
+                    alt={project?.project?.data?.hero_image?.alt}
                     sector={sectorInfo?.data?.name[0]?.text}
                     blurb={sectorInfo?.data?.description[0]?.text}
                     projectLink={project?.project?.data?.sector?.url}
