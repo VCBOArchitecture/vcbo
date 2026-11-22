@@ -12,7 +12,16 @@ import Head from "next/head"
 export async function getStaticProps({ params, previewData }) {
   const client = createClient({ previewData })
 
-  const position = await client.getByUID("position", params.uid)
+  // getByUIDs returns an empty list for a removed or unknown position (a 404),
+  // where getByUID would throw and cause a server error
+  const {
+    results: [position],
+  } = await client.getByUIDs("position", [params.uid])
+
+  if (!position) {
+    return { notFound: true }
+  }
+
   const footer = await client.getSingle("footer")
   const navigation = await client.getSingle("navigation")
 
@@ -29,7 +38,7 @@ export async function getStaticPaths() {
 
   return {
     paths: pages.map((page) => prismicH.asLink(page)),
-    fallback: true,
+    fallback: "blocking",
   }
 }
 
