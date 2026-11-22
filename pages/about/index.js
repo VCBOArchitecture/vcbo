@@ -21,6 +21,9 @@ export async function getStaticProps({ previewData }) {
 
 export default function About(props) {
   const { about } = props
+  const h1 = about?.data?.h1
+  // Without an H1 set in Prismic, the intro statement stays the page's H1
+  const StatementTag = h1 ? "h3" : "h1"
   const [loaded, setLoaded] = useState(false)
   useEffect(() => {
     if (process.browser) {
@@ -61,12 +64,21 @@ export default function About(props) {
       </Head>
       <Lines loaded={loaded} />
       <div className="about-page container mx-auto px-4 md:px-0 mb-60">
+        {h1 && (
+          <ScrollAnimate className="mt-24 md:mt-40 md:ml-4">
+            <h1 className="page-header-title">{h1}</h1>
+          </ScrollAnimate>
+        )}
         <div className="grid grid-cols-8">
           <div className="col-span-12 md:col-span-6">
             <ScrollAnimate>
-              <h3 className="md:ml-4 mb-10 mt-40 about-header">
+              <StatementTag
+                className={`md:ml-4 mb-10 ${
+                  h1 ? "mt-12 md:mt-16" : "mt-40"
+                } about-header`}
+              >
                 {about?.data?.title_text[0]?.text}
-              </h3>
+              </StatementTag>
             </ScrollAnimate>
           </div>
           <div className="col-span-8 md:col-span-7 md:col-start-3">

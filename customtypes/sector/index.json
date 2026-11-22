@@ -50,6 +50,13 @@
       }
     },
     "SEO": {
+      "h1": {
+        "type": "Text",
+        "config": {
+          "label": "H1 (main page heading)",
+          "placeholder": "e.g. K-12 School Architecture. Leave blank to keep the current heading."
+        }
+      },
       "meta_title": {
         "type": "StructuredText",
         "config": {

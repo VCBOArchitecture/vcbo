@@ -138,12 +138,16 @@ export default function Sectors(props) {
           </div>
         </div>
         <ScrollAnimate>
-          <h3 className="mt-10 mb-5 md:mt-20 md:mb-20 sector-name">
-            {page?.data?.name[0]?.text},{" "}
-            {projectResults?.length > 0
-              ? projectResults[0]?.data?.sector?.data?.name[0]?.text
-              : ""}
-          </h3>
+          <h1 className="mt-10 mb-5 md:mt-20 md:mb-20 sector-name">
+            {page?.data?.h1 || (
+              <>
+                {page?.data?.name[0]?.text},{" "}
+                {projectResults?.length > 0
+                  ? projectResults[0]?.data?.sector?.data?.name[0]?.text
+                  : ""}
+              </>
+            )}
+          </h1>
         </ScrollAnimate>
         <div className="grid grid-cols-2">
           {projectResults?.map((project, index) => {

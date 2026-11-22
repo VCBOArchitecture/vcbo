@@ -25,6 +25,7 @@ export async function getStaticProps({ previewData }) {
 
 export default function Articles(props) {
   const { articles, etcPage } = props
+  const h1 = etcPage?.data?.h1
 
   const [loaded, setLoaded] = useState(false)
   const [tags, setTags] = useState([])
@@ -145,11 +146,24 @@ export default function Articles(props) {
       </Head>
       <Lines loaded={loaded} />
       <div className="container mx-auto mt-10 md:mt-40 articles px-4 md:px-0 mb-40">
+        <ScrollAnimate className="mb-10 md:mb-16">
+          {h1 && (
+            <p
+              onClick={() => resetFilter()}
+              className="page-header-label etc-title"
+            >
+              Insights
+            </p>
+          )}
+          <h1
+            onClick={h1 ? undefined : () => resetFilter()}
+            className={`page-header-title ${h1 ? "" : "etc-title"}`}
+          >
+            {h1 || "Insights"}
+          </h1>
+        </ScrollAnimate>
         <div className="grid grid-cols-4">
           <ScrollAnimate>
-            <h2 onClick={() => resetFilter()} className="etc-title">
-              INSIGHTS
-            </h2>
             <input
               className="search-filter cols-2 md:cols-4"
               placeholder="SEARCH"

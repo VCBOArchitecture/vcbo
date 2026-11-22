@@ -29,6 +29,7 @@ export async function getStaticProps({ previewData }) {
 
 export default function Projects(props) {
   const { sectors, projects, allProjects } = props
+  const h1 = projects?.data?.h1
 
   const [loaded, setLoaded] = useState(false)
   const [theme, setTheme] = useState("grid")
@@ -76,17 +77,16 @@ export default function Projects(props) {
       </Head>
       <Lines loaded={loaded} />
       <div className="container mx-auto z-10 relative px-4 md:px-0 mb-60">
-        <div className="grid grid-cols-4 mt-10 md:mt-40 relative">
-          <div className="col-start-1 col-span-4 md:col-span-2">
-            <ScrollAnimate className="mb-20 md:mb-0">
-              <h2 className="uppercase projects-header">
-                Projects
-                <sup>
-                  <small>{allProjects?.length}</small>
-                </sup>
-              </h2>
-            </ScrollAnimate>
-          </div>
+        <ScrollAnimate className="mt-10 md:mt-40">
+          {h1 && (
+            <p className="page-header-label">
+              Projects<sup>{allProjects?.length}</sup>
+            </p>
+          )}
+          <h1 className="page-header-title">{h1 || "Projects"}</h1>
+        </ScrollAnimate>
+        <div className="grid grid-cols-4 mt-10 md:mt-16 relative">
+          <div className="col-start-1 col-span-4 md:col-span-2"></div>
           <div className="grid col-span-4 md:col-span-2 grid-cols-4 items-center col-start-1 md:col-start-3">
             <div className={`grid grid-cols-2 col-span-2 mx-4 relative`}>
               <div

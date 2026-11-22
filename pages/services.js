@@ -94,16 +94,16 @@ export default function Services(props) {
                       "Architecture"
                     }
                   />
-                  <h1 className="hidden md:block absolute architecture">
+                  <h1 className="hidden md:block absolute architecture service-title">
                     Architecture
                   </h1>
                   <p className="hidden md:block md:ml-4">01</p>
                 </div>
               </a>
             </ScrollAnimate>
-            <h1 className="block md:hidden absolute architecture">
+            <h2 className="block md:hidden absolute architecture service-title">
               Architecture
-            </h1>
+            </h2>
             <p className="block md:hidden">01</p>
           </div>
           <div className="col-span-1 relative item-wrap">
@@ -123,14 +123,16 @@ export default function Services(props) {
                       "Interior Design"
                     }
                   />
-                  <h1 className="hidden md:block absolute design">
+                  <h2 className="hidden md:block absolute design service-title">
                     Interior Design
-                  </h1>
+                  </h2>
                   <p className="hidden md:block md:ml-4">02</p>
                 </div>
               </a>
             </ScrollAnimate>
-            <h1 className="block md:hidden absolute design">Interior Design</h1>
+            <h2 className="block md:hidden absolute design service-title">
+              Interior Design
+            </h2>
             <p className="block md:hidden">02</p>
           </div>
           <div className="col-span-1 relative item-wrap planning">
@@ -147,14 +149,16 @@ export default function Services(props) {
                     src={services?.data?.planning[0]?.image?.url}
                     alt={services?.data?.planning[0]?.image?.alt || "Planning"}
                   />
-                  <h1 className="hidden md:block absolute planning">
+                  <h2 className="hidden md:block absolute planning service-title">
                     Planning
-                  </h1>
+                  </h2>
                   <p className="hidden md:block md:ml-4">03</p>
                 </div>
               </a>
             </ScrollAnimate>
-            <h1 className="block md:hidden absolute planning">Planning</h1>
+            <h2 className="block md:hidden absolute planning service-title">
+              Planning
+            </h2>
             <p className="block md:hidden">03</p>
           </div>
           <div className="col-span-1 relative item-wrap">
@@ -174,16 +178,16 @@ export default function Services(props) {
                       "Sustainability"
                     }
                   />
-                  <h1 className="hidden md:block absolute sustainability">
+                  <h2 className="hidden md:block absolute sustainability service-title">
                     Sustainability
-                  </h1>
+                  </h2>
                   <p className="hidden md:block md:ml-4">04</p>
                 </div>
               </a>
             </ScrollAnimate>
-            <h1 className="block md:hidden absolute sustainability">
+            <h2 className="block md:hidden absolute sustainability service-title">
               Sustainability
-            </h1>
+            </h2>
             <p className="block md:hidden ">04</p>
           </div>
         </div>
